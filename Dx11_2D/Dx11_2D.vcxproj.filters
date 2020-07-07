@@ -101,6 +101,11 @@
       <Filter>Dx2D Framework\2. Manager</Filter>
     </ClInclude>
     <ClInclude Include="MainScene.h" />
+    <ClInclude Include="stb_image.h">
+      <Filter>Dx2D Framework\1. MainClasses\System</Filter>
+    </ClInclude>
+    <ClInclude Include="pngInjector.h" />
+    <ClInclude Include="stb_image_write.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MainGame.cpp">
@@ -149,6 +154,7 @@
       <Filter>Dx2D Framework\1. MainClasses\Render</Filter>
     </ClCompile>
     <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="pngInjector.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Dx11_2D.rc">

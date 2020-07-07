@@ -1,18 +1,19 @@
 #pragma once
-#include "GameNode.h"
+#include "Scene.h"
 
-class MainScene : public GameNode
+#include <iostream>
+
+
+class MainScene : public Scene
 {
 public:
 	MainScene();
 	~MainScene();
 
 private:
-
-
-	virtual void Init() override;
-	virtual void Update() override;
-	virtual void Render() override;
-	virtual void Release() override;
+	virtual void init() override;
+	virtual void release() override;
+	virtual void update() override;
+	virtual void render() override;
 
 };
