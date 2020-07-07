@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Dx2D Framework">
+      <UniqueIdentifier>{cf0f9737-e0c6-4fac-8a88-d2fb5acfb2b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx2D Framework\1. MainClasses">
+      <UniqueIdentifier>{bb3000f2-faee-45d4-b318-13eae14e95b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx2D Framework\0. Shader Files">
+      <UniqueIdentifier>{389c072b-9609-4213-b5ac-29cdfc3829d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx2D Framework\2. Manager">
+      <UniqueIdentifier>{b5c03ed0-02e7-4d5c-a35c-208689436b56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx2D Framework\2. Manager\Keyboard">
+      <UniqueIdentifier>{1cb5479f-c0ad-4a5f-83f0-bdc51396237b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx2D Framework\2. Manager\Time">
+      <UniqueIdentifier>{4b5d5d80-c33b-4140-bad2-4a464305e6e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx2D Framework\1. MainClasses\System">
+      <UniqueIdentifier>{0290d4b2-f912-437c-805a-79ffa82157e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dx2D Framework\1. MainClasses\Render">
+      <UniqueIdentifier>{325dd725-827a-4bdc-beed-03aa23a72409}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameNode.h">
+      <Filter>Dx2D Framework\1. MainClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="MainGame.h">
+      <Filter>Dx2D Framework\1. MainClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="SingletonBase.h">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyManager.h">
+      <Filter>Dx2D Framework\2. Manager\Keyboard</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Dx2D Framework\2. Manager\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Dx2D Framework\2. Manager\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Dx11_2D.h">
+      <Filter>Dx2D Framework\1. MainClasses\System</Filter>
+    </ClInclude>
+    <ClInclude Include="DXComponent.h">
+      <Filter>Dx2D Framework\1. MainClasses\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Dx2D Framework\1. MainClasses\System</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Dx2D Framework\1. MainClasses\System</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Dx2D Framework\1. MainClasses\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Dx2D Framework\1. MainClasses\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="GameComponent.h">
+      <Filter>Dx2D Framework\1. MainClasses\System</Filter>
+    </ClInclude>
+    <ClInclude Include="singleton.h">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Direct2DManager.h">
+      <Filter>Dx2D Framework\1. MainClasses</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Dx2D Framework\0. Shader Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Image.h">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextBase.h">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="TextManager.h">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MainGame.cpp">
+      <Filter>Dx2D Framework\1. MainClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyManager.cpp">
+      <Filter>Dx2D Framework\2. Manager\Keyboard</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Dx2D Framework\2. Manager\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Dx2D Framework\2. Manager\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Dx11_2D.cpp">
+      <Filter>Dx2D Framework\1. MainClasses\System</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Dx2D Framework\1. MainClasses\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Dx2D Framework\1. MainClasses\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Direct2DManager.cpp">
+      <Filter>Dx2D Framework\1. MainClasses</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Image.cpp">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextBase.cpp">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="TextManager.cpp">
+      <Filter>Dx2D Framework\2. Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Dx2D Framework\1. MainClasses\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Dx11_2D.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Dx11_2D.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\_Shader\Texture.hlsl">
+      <Filter>Dx2D Framework\0. Shader Files</Filter>
+    </None>
+    <None Include="..\_Shader\Light2.hlsl">
+      <Filter>Dx2D Framework\0. Shader Files</Filter>
+    </None>
+    <None Include="..\_Shader\Color.hlsl">
+      <Filter>Dx2D Framework\0. Shader Files</Filter>
+    </None>
+    <None Include="..\_Shader\Light.hlsl">
+      <Filter>Dx2D Framework\0. Shader Files</Filter>
+    </None>
+    <None Include="..\_Shader\NoiseTexture.hlsl">
+      <Filter>Dx2D Framework\0. Shader Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>
