@@ -13,14 +13,8 @@ https://www.cplusplus.com/forum/beginner/267364/
 
 Import Function             complete
 
-Export Function             making...
+Export Function             complete
 
-Change Magenta(0xFF00FF)    not start
-
-Select Gradation Variation  not start
-
-ImGui Select Color          not start
-
-Multi Select Image          not start
+Multi Select Image          complete
 
 Explore Image               not start
