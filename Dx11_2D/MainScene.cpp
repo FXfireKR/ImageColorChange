@@ -11,7 +11,7 @@ MainScene::~MainScene()
 
 void MainScene::init()
 {
-	
+	ReadBaseColorSetting();
 }
 
 void MainScene::release()
@@ -20,14 +20,29 @@ void MainScene::release()
 
 void MainScene::update()
 {
-	if (ImGui::Button("Convert Image", ImVec2(100, 50)))
-	{
-		ConvertImageW(L"../Export/Ant_46_S_1.png");
-	}
+	if (ImGui::Button("Convert Images", ImVec2(120, 20)))
+		ConvertImage(L"../Export/Ant_46_S_1.png");
 }
 
 void MainScene::render()
 {
+}
+
+void MainScene::ReadBaseColorSetting()
+{
+	FILE* fp = fopen(BASE_COLOR_FILES, "rb");
+	if (fp != NULL) {
+		while (!feof(fp)) {
+			char buffer[256];
+			fgets(buffer, 256, fp);
+			string sBuffer = buffer;
+
+			if(sBuffer.)
+		}
+	}
+	else
+		MessageBoxA(g_hWnd, "Not readable file or Not placed file", "ColorSetting.inl", MB_OK);
+	fclose(fp);
 }
 
 void MainScene::ConvertImageW(wstring origPath)
@@ -46,9 +61,38 @@ void MainScene::ConvertImageW(wstring origPath)
 	exportImage.origin.clear();
 	exportImage.pixels.clear();
 
-	PNG_LOADIMAGE(origPath, originImage);
-	PNG_LOADIMAGE(origPath, exportImage);
-	PNG_LOADIMAGE(filterPath, filterImage);
+	pngInjector::LoadImageW(origPath, originImage);
+	pngInjector::LoadImageW(origPath, exportImage);
+	pngInjector::LoadImageW(filterPath, filterImage);
+
+	width = originImage.pixels.begin()->size();
+	height = originImage.pixels.size();
+
+	ChangeFilterWithOrigin(BColor(255, 153, 0, 255));
+
+	WRITEIMAGE_TO(ImageNamingRule(L"../Export/Ant_46_S_1.png", 1), exportImage);
+	MessageBoxA(g_hWnd, "Create New Image File !", "System", MB_OK);
+}
+
+void MainScene::ConvertImageA(string origPath)
+{
+	//	2개의 파일을 동시 샘플링해서 pixel 값을 바꾼다.
+	string filterPath;
+	filterPath.append(origPath, 0, origPath.find_last_of('.'));
+	filterPath += "_filter.png";
+
+	originImage.origin.clear();
+	originImage.pixels.clear();
+
+	filterImage.origin.clear();
+	filterImage.pixels.clear();
+
+	exportImage.origin.clear();
+	exportImage.pixels.clear();
+
+	pngInjector::LoadImageA(origPath, originImage);
+	pngInjector::LoadImageA(origPath, exportImage);
+	pngInjector::LoadImageA(filterPath, filterImage);
 
 	width = originImage.pixels.begin()->size();
 	height = originImage.pixels.size();
@@ -124,5 +168,13 @@ wstring MainScene::ImageNamingRuleW(const wstring wFileName, int offset)
 
 string MainScene::ImageNamingRuleA(const string aFileName, int offset)
 {
-	return string();
+	string newFileName;
+	newFileName.append(aFileName, 0, aFileName.find_first_of('_'));
+
+	string numberString = (offset < 9) ? ConvertFormat("_0%d", offset) : ConvertFormat("_%d", offset);
+
+	newFileName.append(numberString);
+	newFileName.append(aFileName, aFileName.find_first_of('_'), wFileName.size());
+
+	return newFileName;
 }

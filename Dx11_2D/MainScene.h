@@ -4,9 +4,14 @@
 
 #ifdef UNICODE
 #define ImageNamingRule ImageNamingRuleW
+#define ConvertImage	ConvertImageW
+
 #else
 #define ImageNamingRule ImageNamingRuleA
+#define ConvertImage	ConvertImageA
 #endif
+
+#define BASE_COLOR_FILES	"./ColorSetting.inl"
 
 class MainScene : public Scene
 {
@@ -20,7 +25,10 @@ public:
 	virtual void render() override;
 
 private:
+	void ReadBaseColorSetting();
+
 	void ConvertImageW(wstring origPath);
+	void ConvertImageA(string origPath);
 
 	void ChangeFilterWithOrigin(const BColor _inputColor);
 
@@ -35,6 +43,6 @@ private:
 
 	size_t width, height;
 
-	
+	vector<BColor> convertList;
 
 };
