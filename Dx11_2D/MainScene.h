@@ -43,6 +43,7 @@ private:
 
 	size_t width, height;
 
+	vector<string> fileList;
 	vector<BColor> convertList;
 
 };
