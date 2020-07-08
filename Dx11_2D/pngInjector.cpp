@@ -10,22 +10,20 @@ extern "C" {
 #include "stb_image_write.h"
 }
 
-HRESULT pngInjector::LoadImageW(const wstring & _wFileName, vector<vector<BColor>>& pixels)
+HRESULT pngInjector::LoadImageW(const wstring & _wFileName, ImageInfo & pixels)
 {
-	
 	//	Convert wstring to string
 	USES_CONVERSION;
 	string fileName = W2A(_wFileName.c_str());
 
 	int n = 0, width = 0, height = 0;
-	vector<BYTE> image;
 	unsigned char* data = stbi_load(fileName.c_str(), &width, &height, &n, 4);
 
 	if (data != nullptr) {
-		image = vector<BYTE>(data, data + width * height * 4);
+		pixels.origin = vector<BYTE>(data, data + width * height * 4);
 		stbi_image_free(data);
 
-		pixels.reserve(height);
+		pixels.pixels.reserve(height);
 
 		for (size_t i = 0; i < height; ++i) {
 
@@ -34,11 +32,11 @@ HRESULT pngInjector::LoadImageW(const wstring & _wFileName, vector<vector<BColor
 
 			for (size_t j = 0; j < width; j += 4) {
 				size_t index = 4 * (i * width + j);
-				widPixel[j] = BColor(image[index + 0], image[index + 1],
-					image[index + 2], image[index + 3]);
+				widPixel[j] = BColor(pixels.origin[index + 0], pixels.origin[index + 1],
+					pixels.origin[index + 2], pixels.origin[index + 3]);
 			}
 
-			pixels.push_back(widPixel);
+			pixels.pixels.push_back(widPixel);
 		}
 
 		return S_OK;
@@ -46,7 +44,7 @@ HRESULT pngInjector::LoadImageW(const wstring & _wFileName, vector<vector<BColor
 	return E_FAIL;
 }
 
-HRESULT pngInjector::LoadImageA(const string & _aFileName, vector<vector<BColor>>& pixels)
+HRESULT pngInjector::LoadImageA(const string & _aFileName, ImageInfo & pixels)
 {
 	int n = 0, width = 0, height = 0;
 	vector<BYTE> image;
@@ -56,7 +54,7 @@ HRESULT pngInjector::LoadImageA(const string & _aFileName, vector<vector<BColor>
 		image = vector<BYTE>(data, data + width * height * 4);
 		stbi_image_free(data);
 
-		pixels.reserve(height);
+		pixels.pixels.reserve(height);
 
 		for (size_t i = 0; i < height; ++i) {
 
@@ -64,12 +62,12 @@ HRESULT pngInjector::LoadImageA(const string & _aFileName, vector<vector<BColor>
 			widPixel.resize(width, BColor());
 
 			for (size_t j = 0; j < width; j += 4) {
-				size_t index = ARGB_VALID * (i * width + j);
-				widPixel[j] = BColor(image[index + 0], image[index + 1],
-					image[index + 2], image[index + 3]);
+				size_t index = 4 * (i * width + j);
+				widPixel[j] = BColor(pixels.origin[index + 0], pixels.origin[index + 1],
+					pixels.origin[index + 2], pixels.origin[index + 3]);
 			}
 
-			pixels.push_back(widPixel);
+			pixels.pixels.push_back(widPixel);
 		}
 
 		return S_OK;
@@ -77,29 +75,24 @@ HRESULT pngInjector::LoadImageA(const string & _aFileName, vector<vector<BColor>
 	return E_FAIL;
 }
 
-HRESULT pngInjector::WriteImageW(const wstring & _wFileName, const vector<vector<BColor>>& pixels)
+HRESULT pngInjector::WriteImageW(const wstring & _wFileName, const ImageInfo & pixels)
 {
-	if (pixels.size() < 1)
+	if (pixels.pixels.size() < 1)
 		return E_FAIL;
 	else {
-		int width = static_cast<int>(pixels.begin()->size());
-		int height = static_cast<int>(pixels.size());
-		BYTE* exportPixels = new BYTE[width * height * ARGB_VALID];
+		int width = static_cast<int>(pixels.pixels.begin()->size());
+		int height = static_cast<int>(pixels.pixels.size());
+		BYTE* exportPixels = new BYTE[pixels.origin.size()];
 
 		int index = 0;
 		for (int j = 0; j < height; ++j) {
 
 			for (int i = 0; i < width; ++i) {
 
-				float r = static_cast<float>(pixels[j][i].r);
-				float g = static_cast<float>(pixels[j][i].g);
-				float b = static_cast<float>(pixels[j][i].b);
-				float a = static_cast<float>(pixels[j][i].a);
-
-				exportPixels[index + 0] = pixels[j][i].r;
-				exportPixels[index + 1] = pixels[j][i].g;
-				exportPixels[index + 2] = pixels[j][i].b;
-				exportPixels[index + 3] = pixels[j][i].a;
+				exportPixels[index + 0] = pixels.origin[index + 0];
+				exportPixels[index + 1] = pixels.origin[index + 1];
+				exportPixels[index + 2] = pixels.origin[index + 2];
+				exportPixels[index + 3] = pixels.origin[index + 3];
 
 				index += 4;
 			}
@@ -108,13 +101,71 @@ HRESULT pngInjector::WriteImageW(const wstring & _wFileName, const vector<vector
 		// if CHANNEL_NUM is 4, you can use alpha channel in png
 		USES_CONVERSION;
 		string fileName = W2A(_wFileName.c_str());
-		stbi_write_png(fileName.c_str(), width, height, ARGB_VALID, exportPixels, width * ARGB_VALID);
+		stbi_write_png(fileName.c_str(), width, height, 
+			ARGB_VALID, exportPixels, width * ARGB_VALID);
 
 		return S_OK;
 	}
 }
 
-HRESULT pngInjector::WriteImageA(const string & _aFileName, const vector<vector<BColor>>& pixels)
+HRESULT pngInjector::WriteImageA(const string & _aFileName, const ImageInfo & pixels)
 {
-	return E_NOTIMPL;
+	if (pixels.pixels.size() < 1)
+		return E_FAIL;
+	else {
+		int width = static_cast<int>(pixels.pixels.begin()->size());
+		int height = static_cast<int>(pixels.pixels.size());
+		BYTE* exportPixels = new BYTE[pixels.origin.size()];
+
+		int index = 0;
+		for (int j = 0; j < height; ++j) {
+
+			for (int i = 0; i < width; ++i) {
+
+				exportPixels[index + 0] = pixels.origin[index + 0];
+				exportPixels[index + 1] = pixels.origin[index + 1];
+				exportPixels[index + 2] = pixels.origin[index + 2];
+				exportPixels[index + 3] = pixels.origin[index + 3];
+
+				index += 4;
+			}
+		}
+
+		// if CHANNEL_NUM is 4, you can use alpha channel in png
+		stbi_write_png(_aFileName.c_str(), width, height,
+			ARGB_VALID, exportPixels, width * ARGB_VALID);
+
+		return S_OK;
+	}
+}
+
+void pngInjector::ChangePixelColor(UINT x, UINT y, BColor changedColor, ImageInfo & pixels)
+{
+	UINT index = ARGB_VALID * (y * pixels.pixels.begin()->size() + x);
+
+	//	Base Origin Pixel Color
+	pixels.origin[index + 0] = changedColor.r;
+	pixels.origin[index + 1] = changedColor.g;
+	pixels.origin[index + 2] = changedColor.b;
+	pixels.origin[index + 3] = changedColor.a;
+
+	//	Change Pixel Position Color
+	pixels.pixels[y][x] = changedColor;
+}
+
+void pngInjector::ChangePixelColor(UINT x, UINT y, D3DXCOLOR cColor, ImageInfo & pixels)
+{
+	UINT index = ARGB_VALID * (y * pixels.pixels.begin()->size() + x);
+
+	//	Base Origin Pixel Color
+	pixels.origin[index + 0] = static_cast<BYTE>(cColor.r * 255.0f);
+	pixels.origin[index + 1] = static_cast<BYTE>(cColor.g * 255.0f);
+	pixels.origin[index + 2] = static_cast<BYTE>(cColor.b * 255.0f);
+	pixels.origin[index + 3] = static_cast<BYTE>(cColor.a * 255.0f);
+
+	//	Change Pixel Position Color
+	pixels.pixels[y][x].r = static_cast<BYTE>(cColor.r * 255.0f);
+	pixels.pixels[y][x].g = static_cast<BYTE>(cColor.g * 255.0f);
+	pixels.pixels[y][x].b = static_cast<BYTE>(cColor.b * 255.0f);
+	pixels.pixels[y][x].a = static_cast<BYTE>(cColor.a * 255.0f);
 }

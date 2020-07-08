@@ -127,3 +127,20 @@ struct tagButton
 	}
 
 }; typedef tagButton Button;
+
+static string ConvertFormat(const string _text, ...)
+{
+	va_list args;
+
+	va_start(args, _text);
+	size_t len = vsnprintf(NULL, 0, _text.c_str(), args);
+	va_end(args);
+
+	vector<char> vec(len + 1);
+
+	va_start(args, _text);
+	vsnprintf(&vec[0], len + 1, _text.c_str(), args);
+	va_end(args);
+
+	return &vec[0];
+}
